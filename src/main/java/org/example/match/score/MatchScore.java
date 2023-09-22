@@ -2,10 +2,8 @@ package org.example.match.score;
 
 import lombok.Getter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+
+import java.util.*;
 
 public class MatchScore extends Score<Integer> {
 
@@ -30,7 +28,7 @@ public class MatchScore extends Score<Integer> {
 
     @Override
     public State pointWon(int playerNumber) {
-        State setState = currentSet.point(playerNumber);
+        State setState = currentSet.pointWon(playerNumber);
 
         if (setState == State.PLAYER_ONE_WON) {
             return setWon(playerNumber);
@@ -47,9 +45,9 @@ public class MatchScore extends Score<Integer> {
         List<Integer> gameScore = new ArrayList<>();
         gameScore.add(currentSet.getPlayerScore(0));
         gameScore.add(currentSet.getPlayerScore(1));
-        log.info("Set is end, history for game -> {}", gameScore);
+
         gameResultsInSet.put((getPlayerScore(0) + getPlayerScore(1)), gameScore);
-        log.info("Set № is finish -> {}", getPlayerScore(0) + getPlayerScore(1));
+
 
         if (getPlayerScore(playerNumber) == setsForWin) {
             if (playerNumber == 0) {
