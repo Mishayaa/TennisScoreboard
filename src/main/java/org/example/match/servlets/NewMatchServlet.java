@@ -1,4 +1,4 @@
-package org.example.match;
+package org.example.match.servlets;
 
 
 import jakarta.servlet.ServletException;
@@ -11,11 +11,10 @@ import org.example.player.Player;
 
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.UUID;
 
 @WebServlet("/new-match")
-public class MatchServlet extends HttpServlet {
+public class NewMatchServlet extends HttpServlet {
     private final MatchService ongoingMatchesService = MatchService.getOngoingMatchesService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

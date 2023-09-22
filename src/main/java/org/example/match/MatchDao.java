@@ -80,5 +80,43 @@ public class MatchDao {
         }
         return matches;
     }
+    public List<Match> getAllPagination(int limit, int offset) {
+        List<Match> matches = null;
+        try (Session session = SessionFactoryUtil.getSessionFactory().getCurrentSession()) {
+            session.beginTransaction();
+            Query query = session.createQuery("from Match ORDER BY id DESC", Match.class);
+            matches = query.setMaxResults(limit).setFirstResult(offset).getResultList();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return matches;
+    }
+    public long getAllUnique() {
+        long uniqueResults = 0;
+        try (Session session = SessionFactoryUtil.getSessionFactory().getCurrentSession()) {
+            session.beginTransaction();
+            Query query = session.createQuery("SELECT count(*) from Match", Match.class);
+            uniqueResults = (long) query.getSingleResult();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return uniqueResults;
+    }
+
+    public int getByPlayerNameUnique(String name) {
+        int uniqueResults = 0;
+        try (Session session = SessionFactoryUtil.getSessionFactory().getCurrentSession()) {
+            session.beginTransaction();
+            Query query = session.createQuery("SELECT count(*) from Match where player1.name like:name or player2.name like:name", Match.class);
+            query.setParameter("name", "%" + name.toUpperCase().trim() + "%");
+            uniqueResults = (int) query.getSingleResult();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return uniqueResults;
+    }
 
 }
