@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.db_utils.SessionFactoryUtil;
 import org.example.player.Player;
+import org.example.player.PlayerDao;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -43,6 +44,8 @@ public class App {
             }
             e.printStackTrace();
         }
+        PlayerDao playerDao = new PlayerDao();
 
+        System.out.println(playerDao.getByName("LOH"));
     }
 }
